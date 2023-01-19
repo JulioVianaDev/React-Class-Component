@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,Component } from 'react';
 import User from './User';
 
 import classes from './Users.module.css';
@@ -9,12 +9,40 @@ const DUMMY_USERS = [
   { id: 'u3', name: 'Julie' },
 ];
 
-const Users = () => {
-  const [showUsers, setShowUsers] = useState(true);
+class Users extends Component{
+  constructor(){
+    super();
+    this.state = {
+      showUsers: true,
+      more: 'Test'
+    }
+  }
+  
+  toggleUsersHandler(){
+    // this.state.showUsers = false == not
+    // this.setState({showUsers: false})
+    this.setState((curState)=>{
+      return {showUsers: !curState.showUsers}
+    });
+  }
+  
+  render(){
+    return(
+      <div className={classes.users}>
+      <button onClick={this.toggleUsersHandler.bind(this)}>
+       {this.state.showUsers ? 'Hide' : 'Show'} Users
+      </button>
+      {this.state.showUsers && usersList}
+    </div>
+  )}
+}
 
-  const toggleUsersHandler = () => {
-    setShowUsers((curState) => !curState);
-  };
+// const Users = () => {
+//   const [showUsers, setShowUsers] = useState(true);
+
+//   const toggleUsersHandler = () => {
+//     setShowUsers((curState) => !curState);
+//   };
 
   const usersList = (
     <ul>
@@ -24,14 +52,14 @@ const Users = () => {
     </ul>
   );
 
-  return (
-    <div className={classes.users}>
-      <button onClick={toggleUsersHandler}>
-        {showUsers ? 'Hide' : 'Show'} Users
-      </button>
-      {showUsers && usersList}
-    </div>
-  );
-};
+//   return (
+//     <div className={classes.users}>
+//       <button onClick={toggleUsersHandler}>
+//         {showUsers ? 'Hide' : 'Show'} Users
+//       </button>
+//       {showUsers && usersList}
+//     </div>
+//   );
+// };
 
 export default Users;
